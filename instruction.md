@@ -9,6 +9,7 @@ This document provides systematic patterns and procedures for standardizing HTML
 - [Task Group A: Figure Tag Standardization](#task-group-a-figure-tag-standardization)
 - [Task Group B: Table Tag Standardization](#task-group-b-table-tag-standardization)
 - [Task Group C: Table of Contents (TOC) Standardization](#task-group-c-table-of-contents-toc-standardization)
+  - [Extra TOC Task (Without Wrapper)](#extra-toc-task-without-wrapper)
 - [Task Group D: FAQ Section Standardization](#task-group-d-faq-section-standardization)
 - [Task Group E: Future Tasks](#task-group-e-future-tasks)
 - [General Guidelines for AI Assistants](#general-guidelines-for-ai-assistants)
@@ -337,6 +338,72 @@ When processing HTML files, identify these common structural issues with table o
 - ✅ All referenced headings have matching ID attributes
 - ✅ Clean, clickable navigation structure
 - ✅ Preserved original text content in list items
+
+### Extra TOC Task (Without Wrapper)
+
+For cases where a list already exists in the document and only needs anchor links added (no marketing block wrapper needed).
+
+#### Problem Pattern Recognition
+
+- Existing `<ol>` or `<ul>` lists that summarize sections but lack clickable navigation
+- List items that correspond to `<h3>` or other subheadings without IDs
+- No wrapper div needed - list structure should be preserved as-is
+
+#### Standard Transformation Pattern
+
+**Broken Structure (Before):**
+
+```html
+<ol>
+  <li>Päätä, mistä podcast kertoo</li>
+  <li>Määrittele podcastin tavoite ja tarkoitus</li>
+  <li>Valitse formaatti</li>
+  <li>Luo podcastille brändi</li>
+</ol>
+```
+
+**Corrected Structure (After):**
+
+```html
+<ol>
+  <li><a href="#6">Päätä, mistä podcast kertoo</a></li>
+  <li><a href="#7">Määrittele podcastin tavoite ja tarkoitus</a></li>
+  <li><a href="#8">Valitse formaatti</a></li>
+  <li><a href="#9">Luo podcastille brändi</a></li>
+</ol>
+```
+
+**Corresponding Heading Updates:**
+
+```html
+<h3 id="6"><strong>1. Päätä mistä podcastisi kertoo</strong></h3>
+<h3 id="7"><strong>2. Määrittele podcastin tavoite ja tarkoitus</strong></h3>
+<h3 id="8"><strong>3. Valitse formaatti</strong></h3>
+<h3 id="9"><strong>4. Luo podcast-brändisi</strong></h3>
+```
+
+#### Implementation Procedure
+
+1. **Search for existing ID patterns**: Use grep to find all `id="[number]"` attributes in the document to identify the highest existing ID number
+2. **Determine starting ID**: Continue numbering from the last used ID number (e.g., if highest is 5, start list items at 6)
+3. **Apply anchor link transformation** (NO wrapper needed):
+   - Keep the existing `<ol>` or `<ul>` structure as-is
+   - Add anchor links to each `<li>` item using sequential ID numbers
+   - Format: `<li><a href="#[number]">Item text</a></li>`
+4. **Update corresponding heading tags**: Add matching ID attributes to the related `<h3>` (or other) tags throughout the document
+   - First list item links to first section heading `<h3 id="6">`
+   - Second list item links to second section heading `<h3 id="7">`
+   - Continue pattern for all list items
+5. **Verify completion**: Confirm all list items have working anchor links and corresponding heading IDs
+
+#### Quality Standards
+
+- ✅ NO wrapper div added - existing list structure preserved
+- ✅ Sequential ID numbering continuing from existing document structure
+- ✅ All list items have functional anchor links
+- ✅ All referenced headings have matching ID attributes
+- ✅ Clean, clickable navigation structure
+- ✅ Preserved original text content and list type (`<ol>` or `<ul>`)
 
 ---
 
