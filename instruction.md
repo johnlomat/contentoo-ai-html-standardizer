@@ -167,32 +167,34 @@ When processing HTML files, identify these common structural issues with tables:
 **Corrected Structure (After):**
 
 ```html
-<table class="tg" style="margin: 0 auto">
-  <thead>
-    <tr>
-      <th scope="col" class="tg-wkkj" style="text-align: center">Plattform</th>
-      <th scope="col" class="tg-wkkj" style="text-align: center">Styrker</th>
-      <th scope="col" class="tg-wkkj" style="text-align: center">Best for</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="tg-wp8o">TikTok</td>
-      <td class="tg-wp8o">Viral rekkevidde, unge publikum, UGC/video-native</td>
-      <td class="tg-wp8o">Visuelle produkter som skjønnhet, livsstil, DIY; tidlige oppdagelseskampanjer</td>
-    </tr>
-    <tr>
-      <td class="tg-wp8o">Meta</td>
-      <td class="tg-wp8o">Granulær målretting, retargeting, sosial tillit</td>
-      <td class="tg-wp8o">Retargeting, lookalikes, samfunnsbygging</td>
-    </tr>
-    <tr>
-      <td class="tg-wp8o">Google</td>
-      <td class="tg-wp8o">Intensjonsbasert søk, Shopping, sterk ROI</td>
-      <td class="tg-wp8o">Høy-intensjons kjøp</td>
-    </tr>
-  </tbody>
-</table>
+<div style="overflow-x: auto">
+  <table class="tg" style="margin: 0 auto">
+    <thead>
+      <tr>
+        <th scope="col" class="tg-wkkj" style="text-align: center">Plattform</th>
+        <th scope="col" class="tg-wkkj" style="text-align: center">Styrker</th>
+        <th scope="col" class="tg-wkkj" style="text-align: center">Best for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-wp8o">TikTok</td>
+        <td class="tg-wp8o">Viral rekkevidde, unge publikum, UGC/video-native</td>
+        <td class="tg-wp8o">Visuelle produkter som skjønnhet, livsstil, DIY; tidlige oppdagelseskampanjer</td>
+      </tr>
+      <tr>
+        <td class="tg-wp8o">Meta</td>
+        <td class="tg-wp8o">Granulær målretting, retargeting, sosial tillit</td>
+        <td class="tg-wp8o">Retargeting, lookalikes, samfunnsbygging</td>
+      </tr>
+      <tr>
+        <td class="tg-wp8o">Google</td>
+        <td class="tg-wp8o">Intensjonsbasert søk, Shopping, sterk ROI</td>
+        <td class="tg-wp8o">Høy-intensjons kjøp</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <p></p>
 ```
 
@@ -247,23 +249,25 @@ When processing HTML files, identify these common structural issues with tables:
    ```
 4. **Apply transformation systematically**:
    - **CRITICAL**: Remove any wrapper divs (e.g., `<div align="left">`, `<div align="center">`) around the table element
+   - Wrap each table in `<div style="overflow-x: auto">` for responsive horizontal scrolling
    - Remove `<p>` tags from all `<th>` and `<td>` elements
    - Add `class="tg" style="margin: 0 auto"` to table elements
    - Apply appropriate CSS classes to table cells (`tg-wkkj` for headers, `tg-wp8o` for data cells)
    - Add `style="text-align: center"` to all `<th>` elements in header rows
-   - Add empty `<p></p>` tag immediately after each `</table>` closing tag
+   - Add empty `<p></p>` tag immediately after each `</div>` closing tag (the overflow wrapper)
    - Preserve all other table attributes and styling
    - Maintain text content exactly as-is
-5. **Verify completion**: Confirm no wrapper divs around tables, no unnecessary `<p>` tags remain in tables, CSS styling is applied, and empty `<p></p>` tags are present after tables
+5. **Verify completion**: Confirm no original wrapper divs around tables (like `<div align="left">`), each table is wrapped in `<div style="overflow-x: auto">`, no unnecessary `<p>` tags remain in tables, CSS styling is applied, and empty `<p></p>` tags are present after each overflow wrapper
 
 ### Quality Standards
 
-- ✅ No wrapper divs around table elements
+- ✅ No original wrapper divs around table elements (like `<div align="left">`)
+- ✅ Each table wrapped in `<div style="overflow-x: auto">` for responsive scrolling
 - ✅ Clean table cell content without wrapper paragraphs
 - ✅ Preserved table styling and CSS classes
 - ✅ Maintained semantic table structure
 - ✅ All text content preserved exactly
-- ✅ Empty `<p></p>` tags added after each `</table>` closing tag
+- ✅ Empty `<p></p>` tags added after each overflow wrapper `</div>`
 
 ---
 
