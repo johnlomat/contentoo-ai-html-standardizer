@@ -490,15 +490,71 @@ When processing HTML files, identify these common structural issues with FAQ sec
 
 ---
 
-## Task Group E: [Future Tasks]
+## Task Group E: CTA Box Standardization
 
-_Additional HTML standardization tasks can be added here_
+### Problem: Raw CTA content uses plain `<p>` tags without proper marketing-block structure
 
-### Example: Link Standardization
+### Pattern Recognition
 
-- Pattern recognition for broken links
-- Systematic replacement procedures
-- Quality standards for link structure
+Look for 3 consecutive `<p>` tags following this pattern:
+
+1. **Title tag**: `<p><strong>Title text</strong></p>`
+2. **Text tag**: `<p>Description text.</p>`
+3. **CTA tag**: `<p><a href="URL"><strong>CTA text</strong></a></p>`
+
+> Note: The 3rd `<p>` tag contains an `<a>` link, sometimes with `<strong>` wrapping the CTA text.
+
+### Standard Transformation Pattern
+
+**Before (raw format):**
+```html
+<p><strong>Bli Shopify-affiliate</strong></p>
+<p>Bli med i programmet for å styrke merkevaren din, få tilgang til eksklusive muligheter og tjene en konkurransedyktig provisjon for hver nye bedrift du henviser til Shopify.</p>
+<p>
+  <a href="/no/affiliates"><strong>Søk nå</strong></a>
+</p>
+```
+
+**After (CTA Box format):**
+```html
+<div class="marketing-block marketing-block--light marketing-block--padded">
+  <p class="heading--4">Bli Shopify-affiliate</p>
+  <p>Bli med i programmet for å styrke merkevaren din, få tilgang til eksklusive muligheter og tjene en konkurransedyktig provisjon for hver nye bedrift du henviser til Shopify.</p>
+  <a href="/no/affiliates" class="marketing-button marketing-button--small" target="_blank">Søk nå</a>
+</div>
+```
+
+### Transformation Rules
+
+1. **Wrapper**: Wrap all 3 elements in `<div class="marketing-block marketing-block--light marketing-block--padded">`
+2. **Title**: Remove `<strong>` tags, add `class="heading--4"` to the `<p>` tag
+3. **Text**: Keep the `<p>` tag as-is (no changes)
+4. **CTA**: Convert the `<p><a>` structure to a standalone `<a>` tag with:
+   - Keep the original `href` value
+   - Add `class="marketing-button marketing-button--small"`
+   - Add `target="_blank"`
+   - Remove any `<strong>` tags inside — use plain text for the CTA label
+   - Remove the wrapping `<p>` tag
+
+### Implementation Procedure
+
+1. **Scan** the HTML file for the 3-tag CTA pattern
+2. **Count** the number of CTA boxes found
+3. **Apply tool selection rules**:
+   - 1–3 CTA boxes → use **Edit tool** directly
+   - 4+ CTA boxes → use **Task tool** with general-purpose agent
+4. **Transform** each CTA box following the transformation rules above
+5. **Verify** each transformation preserves the original text, URL, and CTA label
+
+### Quality Standards
+
+- ✅ Wrapper div has all 3 classes: `marketing-block`, `marketing-block--light`, `marketing-block--padded`
+- ✅ Title uses `class="heading--4"` and no `<strong>` tags
+- ✅ Text paragraph preserved exactly
+- ✅ CTA link has `class="marketing-button marketing-button--small"` and `target="_blank"`
+- ✅ No remaining `<strong>` tags inside the CTA link
+- ✅ No wrapping `<p>` tag around the CTA link
+- ✅ All original content (text, URL, CTA label) preserved exactly
 
 ---
 
